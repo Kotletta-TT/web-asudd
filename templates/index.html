@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% block title %} Карта АСУДД {% endblock %}
+{% block head %}
+<script src="https://api-maps.yandex.ru/2.1/?apikey=&lang=ru_RU" type="text/javascript"></script>
+<script type="text/javascript">
+    // Функция ymaps.ready() будет вызвана, когда
+    // загрузятся все компоненты API, а также когда будет готово DOM-дерево.
+    ymaps.ready(init);
+    function init(){
+        // Создание карты.
+        var myMap = new ymaps.Map("map", {
+            // Координаты центра карты.
+            // Порядок по умолчанию: «широта, долгота».
+            // Чтобы не определять координаты центра карты вручную,
+            // воспользуйтесь инструментом Определение координат.
+            center: [43.60, 39.70],
+            // Уровень масштабирования. Допустимые значения:
+            // от 0 (весь мир) до 19.
+            zoom: 11
+        });
+        cam1 = new ymaps.Placemark([
+            43.581482, 39.722635
+        ], {
+            balloonContent: 'some color'
+        }, {
+            // Опции.
+            // Необходимо указать данный тип макета.
+            iconLayout: 'default#image',
+            // Своё изображение иконки метки.
+            iconImageHref: '{{ url_for("static", filename="img/cam_online.png")}}',
+            // Размеры метки.
+            iconImageSize: [36, 36],
+            // Смещение левого верхнего угла иконки относительно
+            // её "ножки" (точки привязки).
+            iconImageOffset: [-18, -18]
+        })
+        cam2 = new ymaps.Placemark([
+            43.5654, 39.749807
+        ], {
+            balloonContent: 'some color'
+        }, {
+            // Опции.
+            // Необходимо указать данный тип макета.
+            iconLayout: 'default#image',
+            // Своё изображение иконки метки.
+            iconImageHref: '{{ url_for("static", filename="img/cam_offline.png")}}',
+            // Размеры метки.
+            iconImageSize: [36, 36],
+            // Смещение левого верхнего угла иконки относительно
+            // её "ножки" (точки привязки).
+            iconImageOffset: [-18, -18]
+        })
+        myMap.geoObjects
+        {% for row in nodes %}
+             .add(new ymaps.Placemark([{{ row.latitude }}, {{ row.longitude }}], {
+            balloonContent: '{{ row.name }}'
+        }, {
+                // Опции.
+            // Необходимо указать данный тип макета.
+            iconLayout: 'default#image',
+            // Своё изображение иконки метки.
+                {% if row.type == 'cam' %}
+            iconImageHref: '{{ url_for("static", filename="img/cam_online.png")}}',
+                 {% endif %}
+             {% if row.type == 'sdot' %}
+            iconImageHref: '{{ url_for("static", filename="img/sdot_online.png")}}',
+                 {% endif %}
+            // Размеры метки.
+            iconImageSize: [36, 36],
+            // Смещение левого верхнего угла иконки относительно
+            // её "ножки" (точки привязки).
+            iconImageOffset: [-18, -18]
+
+        }))
+        {% endfor %};
+    }
+</script>
+{% endblock %}
+{% block current_bar_index %}active{% endblock %}
+{% block content %}
+<div class="container-fluid">
+   <div class="row">
+    <div class="col-10">
+    <div id="map" style="width: 100%; height: 850px"></div>
+    </div>
+       <div class="col-2 bg-secondary">
+         <div class="form-check">
+           <p class="h2 text-center text-light">Фильтры</p>
+           <input class="form-check-input" type="checkbox" value="cam" id="cam" checked>
+             <label class="form-check-label" for="cam">
+             <p class="h4 text-light">Камеры</p>
+             </label>
+         </div>
+         <div class="form-check">
+           <input class="form-check-input" type="checkbox" value="tpi" id="tpi" checked>
+             <label class="form-check-label" for="tpi">
+               <p class="h4 text-light">ТПИ</p>
+             </label>
+         </div>
+         <div class="form-check">
+           <input class="form-check-input" type="checkbox" value="sdot" id="sdot" checked>
+             <label class="form-check-label" for="sdot">
+               <p class="h4 text-light">Остановочные табло</p>
+             </label>
+         </div>
+         <div class="form-check">
+           <input class="form-check-input" type="checkbox" value="co" id="co" checked>
+             <label class="form-check-label" for="co">
+               <p class="h4 text-light">Светофоры</p>
+             </label>
+         </div>
+         <div class="form-check">
+           <input class="form-check-input" type="checkbox" value="puid" id="puid" checked>
+             <label class="form-check-label" for="puid">
+               <p class="h4 text-light">ПУИДы</p>
+             </label>
+         </div>
+       <p class="h2 text-center text-light">Состояние</p>
+         <div class="form-check">
+           <input class="form-check-input" type="checkbox" value="online" id="online" checked>
+             <label class="form-check-label" for="online">
+               <p class="h4 text-light">Online</p>
+             </label>
+         </div>
+         <div class="form-check">
+           <input class="form-check-input" type="checkbox" value="offline" id="offline" checked>
+             <label class="form-check-label" for="offline">
+               <p class="h4 text-light">Off-line</p>
+             </label>
+         </div>
+           <div p class="h1"> </div>
+       <div class="text-center"><button type="button" class="btn btn-primary">Применить</button></div>
+
+       </div>
+  </div>
+</div>
+{% endblock %}

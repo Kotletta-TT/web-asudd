@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %} Камеры АСУДД {% endblock %}
+{% block current_bar_cam %}active{% endblock %}
+{% block content %}
+    <h1>Камеры</h1>
+<div class="container-fluid">
+<div class="row row-cols-1 row-cols-md-5">
+  <div class="col mb-4">
+    <div class="card h-100">
+      <img src="{{ url_for("static", filename="img/image.jpg")}}" class="card-img-top" alt="time screenshot">
+      <div class="card-body">
+        <h5 class="card-title">VK-01</h5>
+        <div class="dropdown">
+          <button class="btn btn-success btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Управление камерой
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item bg-success" href="#">External IP</a>
+            <a class="dropdown-item" href="#">VPN</a>
+            <a class="dropdown-item" href="#">Camera</a>
+            <a class="dropdown-item" href="#">Reboot Modem</a>
+            <a class="dropdown-item" href="#">Reboot Camera</a>
+            <a class="dropdown-item" href="#">Take Screenshot</a>
+           </div>
+         </div>
+      </div>
+    </div>
+  </div>
+  <div class="col mb-4">
+    <div class="card h-100">
+      <img src="{{ url_for("static", filename="img/image.jpg")}}" class="card-img-top" alt="time screenshot">
+      <div class="card-body">
+        <h5 class="card-title">VK-02</h5>
+        <div class="dropdown">
+          <button class="btn btn-danger btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Управление камерой
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+           </div>
+         </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}
