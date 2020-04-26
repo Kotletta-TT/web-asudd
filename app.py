@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/grooty/PycharmProjects/flask-test/test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://asudduser:asuddp@ss@localhost/webasudd'
 app.config['SECRET_KEY'] = 'thisissecret'
 
 db = SQLAlchemy(app)
@@ -30,7 +30,7 @@ class User(UserMixin, db.Model):
 class Nodes(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(10), unique=True, nullable=False)
+    name = db.Column(db.String(10), nullable=False)
     type = db.Column(db.String(10), nullable=False)
     latitude = db.Column(db.Float(10, 6))
     longitude = db.Column(db.Float(10, 6))
@@ -38,7 +38,6 @@ class Nodes(db.Model):
     vpn_ip = db.Column(db.String(15))
     main_ip = db.Column(db.String(15))
     status = db.Column(db.String(10))
-    description = db.Column(db.String(150))
 
 
 @login_manger.user_loader

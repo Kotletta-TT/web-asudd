@@ -1,6 +1,7 @@
 import pymysql
 import datetime
 
+
 class DBHelper:
 
     def __init__(self, dbhost, dbname, dbuser, dbpassword):
@@ -9,26 +10,26 @@ class DBHelper:
         self.dbname = dbname
         self.dbhost = dbhost
 
-
     def connect(self):
         return pymysql.connect(host=self.dbhost,
                                user=self.dbuser,
                                password=self.dbpassword,
                                db=self.dbname)
 
-
     def add_node(self, node):
         connection = self.connect()
         try:
-            query = "INSERT INTO nodes (name, type, lat, lng, addr, status, description) VALUES (%s, %s, %s, %s, %s, %s, %s);"
+            query = "INSERT INTO nodes (name, type, lat, lng, addr, status, description) VALUES (%s, %s, %s, %s, %s, " \
+                    "%s, %s);"
             with connection.cursor() as cur:
-                cur.execute(query, (node.name, node.type, node.coord[0], node.coord[1], ','.join(node.addr), node.status, node.desc))
+                cur.execute(query, (
+                node.name, node.type, node.coord[0], node.coord[1], ','.join(node.addr), node.status, node.desc))
                 connection.commit()
         finally:
             connection.close()
 
     def get_node(self, name):
-       # node = []
+        # node = []
         connection = self.connect()
         try:
             query = "SELECT * FROM nodes WHERE name=\'" + name + "\';"
@@ -59,4 +60,3 @@ class DBHelper:
 
         finally:
             connection.close()
-

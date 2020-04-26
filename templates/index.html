@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %} Карта АСУДД {% endblock %}
 {% block head %}
-<script src="https://api-maps.yandex.ru/2.1/?apikey=&lang=ru_RU" type="text/javascript"></script>
+<script src="https://api-maps.yandex.ru/2.1/?apikey=aecf5b56-b5ad-459b-b7fd-930a071c2195&lang=ru_RU" type="text/javascript"></script>
 <script type="text/javascript">
     // Функция ymaps.ready() будет вызвана, когда
     // загрузятся все компоненты API, а также когда будет готово DOM-дерево.
@@ -59,12 +59,18 @@
             // Необходимо указать данный тип макета.
             iconLayout: 'default#image',
             // Своё изображение иконки метки.
-                {% if row.type == 'cam' %}
+                {% if row.type == 'cam' and row.status == 'online' %}
             iconImageHref: '{{ url_for("static", filename="img/cam_online.png")}}',
-                 {% endif %}
-             {% if row.type == 'sdot' %}
+                {% endif %}
+                {% if row.type == 'cam' and row.status == 'offline' %}
+            iconImageHref: '{{ url_for("static", filename="img/cam_offline.png")}}',
+                {% endif %}
+                {% if row.type == 'sdot' and row.status == 'online'%}
             iconImageHref: '{{ url_for("static", filename="img/sdot_online.png")}}',
-                 {% endif %}
+                {% endif %}
+                {% if row.type == 'sdot' and row.status == 'offline'%}
+            iconImageHref: '{{ url_for("static", filename="img/sdot_offline.png")}}',
+                {% endif %}
             // Размеры метки.
             iconImageSize: [36, 36],
             // Смещение левого верхнего угла иконки относительно

@@ -2,10 +2,12 @@ import os
 import time
 from threading import Thread
 from db import DBHelper
+
 # import csv
 
 
 db = DBHelper('localhost', 'webasudd', 'asudduser', 'asuddp@ss')
+
 
 class MyThread(Thread):
     """
@@ -16,7 +18,6 @@ class MyThread(Thread):
         """Инициализация потока"""
         Thread.__init__(self)
         self.node = node
-
 
     def run(self):
         """Запуск потока"""
@@ -35,12 +36,14 @@ class MyThread(Thread):
             # db.test_update_status(self.ip, status)
         # else:
         #     status = 'offline'
-            # print(f'{self.ip} -- down')
-            # db.test_update_status(self.ip, status)
-            # return status
+        # print(f'{self.ip} -- down')
+        # db.test_update_status(self.ip, status)
+        # return status
+
 
 class Node:
     """Needed to create object Node"""
+
     def __init__(self, name, typenode, latitude, longitude,
                  ext_ip, vpn_ip, main_ip, status):
         self.stat = ["down", "down", "down"]
@@ -54,23 +57,23 @@ class Node:
         self.status = status
 
 
+# def create_threads():
+#     """
+#     Создаем группу потоков
+#     """
+#     list_ip = ['172.16.160.' + str(x) for x in range(1, 255)]
+#     for ip in list_ip:
+#         my_thread = MyThread(ip)
+#         my_thread.start()
 
-def create_threads():
-    """
-    Создаем группу потоков
-    """
-    list_ip = ['172.16.160.' + str(x) for x in range(1, 255)]
-    for ip in list_ip:
-        my_thread = MyThread(ip)
-        my_thread.start()
 
 # def run(ip):
 #     """Запуск потока"""
 #     ping = os.system(f"ping -c 3 {ip} > /dev/null")
 #     if ping == 0:
 #         print(f'{ip} -- up')
-    # else:
-    #     print(f'{ip} -- down')
+# else:
+#     print(f'{ip} -- down')
 
 
 # def csv_to_db():
@@ -85,11 +88,10 @@ def create_threads():
 #             db.add_node(node)
 
 
-
 if __name__ == "__main__":
     nodes = list(db.get_all_nodes())
     while True:
         for node in nodes:
-            test = MyThread(node)
-            test.start()
+            ping_thread = MyThread(node)
+            ping_thread.start()
         time.sleep(60)

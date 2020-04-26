@@ -1,5 +1,6 @@
 import pymysql
 
+
 class DBHelper:
 
     def __init__(self, dbhost, dbname, dbuser, dbpassword):
@@ -18,9 +19,12 @@ class DBHelper:
         """add full nodes to real table"""
         connection = self.connect()
         try:
-            query = "INSERT INTO nodes (name, type, latitude, longitude, ext_ip, vpn_ip, main_ip, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);"
+            query = "INSERT INTO nodes (name, type, latitude, longitude, ext_ip, vpn_ip, main_ip, status) VALUES (%s, " \
+                    "%s, %s, %s, %s, %s, %s, %s);"
             with connection.cursor() as cur:
-                cur.execute(query, (node.name, node.typenode, node.latitude, node.longitude, node.ext_ip, node.vpn_ip, node.main_ip, node.status))
+                cur.execute(query, (
+                node.name, node.typenode, node.latitude, node.longitude, node.ext_ip, node.vpn_ip, node.main_ip,
+                node.status))
                 connection.commit()
 
         finally:
@@ -60,9 +64,6 @@ class DBHelper:
         finally:
             connection.close()
 
-
-
-
             # def test_take_ip(self, name):
     #     """This test empty ip row and handling"""
     #     connection = self.connect()
@@ -96,11 +97,6 @@ class DBHelper:
     #             connection.commit()
     #     finally:
     #         connection.close()
-
-
-
-
-
 
 # list_ip = ['172.16.160.' + str(x) for x in range(1, 256)]
 # db = DBHelper('localhost', 'webasudd', 'asudduser', 'asuddp@ss')
